@@ -26,15 +26,19 @@ void ProcessType(TypeDefinition type)
 
 void ProcessMethod(MethodDefinition method)
 {
-    if (method.ReturnType.FullName == "System.Void")
-        return;
-
     var il = method.Body.GetILProcessor();
-    var first = method.Body.Instructions[0];
-    var last = method.Body.Instructions[^1];
 
-    il.InsertBefore(first, Instruction.Create(OpCodes.Ldc_I4_0));
-    il.InsertBefore(first, il.Create(OpCodes.Switch, new Instruction[] { first, last }));
+    var first = method.Body.Instructions[0];
+
+    Instruction start = Instruction.Create(OpCodes.Ldc_I4_0);
+    il.InsertBefore(first, start);
+
+    Instruction invalidDestination;
+    if (method.ReturnType.FullName == "System.Void")
+        il.InsertBefore(first, invalidDestination = Instruction.Create(OpCodes.Unaligned, (byte)0));
+    else invalidDestination = method.Body.Instructions[^1];
+
+    il.InsertAfter(start, il.Create(OpCodes.Switch, new Instruction[] { first, invalidDestination }));
 }
 
 MemoryStream mem = new();

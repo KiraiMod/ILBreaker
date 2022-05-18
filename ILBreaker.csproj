@@ -16,8 +16,4 @@
     <PackageReference Include="Mono.Cecil" Version="0.11.4" />
   </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="IF EXIST &quot;$(ProjectDir)\..\KiraiMod.Private&quot; (&#xD;&#xA;  COPY &quot;$(TargetDir)\*&quot; &quot;$(ProjectDir)\..\KiraiMod.Private\Lib\ILBreaker\&quot; &gt; nul&#xD;&#xA;)" />
-  </Target>
-
 </Project>

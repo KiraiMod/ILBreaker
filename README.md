@@ -1,5 +1,5 @@
 # ILBreaker
-Tool to rewritemethods with invalid IL to prevent decompilation
+Tool to rewrite methods with invalid IL to prevent decompilation
 
 # Usage
 `dotnet ILBreaker.dll target.dll`

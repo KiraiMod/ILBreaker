@@ -26,6 +26,8 @@ void ProcessType(TypeDefinition type)
 
 void ProcessMethod(MethodDefinition method)
 {
+    if (method?.Body is null) return;
+    
     var il = method.Body.GetILProcessor();
 
     var first = method.Body.Instructions[0];
